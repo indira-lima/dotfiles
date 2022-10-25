@@ -284,5 +284,5 @@ exec --no-startup-id flameshot
 exec --no-startup-id "compton --config ~/.config/compton/config -b"
 exec "setxkbmap -layout br"
 exec_always --no-startup-id ~/.config/polybar/launch.sh
-exec --no-startup-id nitrogen --set-auto ~/Pictures/img/Space\ Wallpapers/blackhole.jpg
-exec_always --no-startup-id disable-standby-fs | tee /dev/tty
+
+
