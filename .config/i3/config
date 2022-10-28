@@ -243,7 +243,7 @@ assign [class="riotclientux.exe"] → $ws6
 assign [class="leagueclient.exe"] → $ws6
 assign [class="leagueclientux.exe"] → $ws6
 assign [class="battle.net.exe"] → $ws6
-assign [class="keepassxc" instance="keepassxc"] → $ws10
+assign [class="KeePassXC"] → $ws10
 
 # enabling floating windows for Steam
 # https://github.com/ValveSoftware/steam-for-linux/issues/1040
@@ -304,5 +304,6 @@ exec "setxkbmap -layout br"
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec --no-startup-id nitrogen --restore 
 exec_always --no-startup-id disable-standby-fs | tee /dev/tty
+exec_always --no-startup-id init-second-monitor
 
 ### end startup applications
