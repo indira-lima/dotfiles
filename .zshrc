@@ -134,16 +134,19 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH="$PATH:$HOME/bin:$HOME/Documents/Games/dead-cells:$HOME/android-studio/bin:$HOME/Android/Sdk/platform-tools"
 export JAVA_HOME="/home/schuster/android-studio/jre"
-export CODE_HOME="$HOME/Documents/code"
+export ANDROID_HOME="/home/schuster/Android/Sdk"
+export PATH="$PATH:$ANDROID_HOME"
+export CODE_HOME="$HOME/code"
 export PATH="$PATH:$CODE_HOME/linux-utils:$CODE_HOME/i3-battery-popup"
 export TMUX_SESSION_NAME="default"
 export TMUX_WINDOW_NAME="work"
-export PATH=$PATH:/usr/local/go/bin
+export PATH="$PATH:/usr/local/go/bin"
 
-alias cdng='cd ~/Documents/code/quaestum/nagumo'
-alias cdqs='cd ~/Documents/code/quaestum'
+alias cdng='cd ~/code/quaestum/nagumo'
+alias cdqs='cd ~/code/quaestum'
 
-source ~/Documents/code/linux-utils/commands.sh
+source ~/code/linux-utils/commands.sh
 export TERMINAL='gnome-terminal'
 export EDITOR=vim
 export PATH="$PATH:/opt/genymobile/genymotion"
+export PATH=$PATH:/home/schuster/.spicetify
