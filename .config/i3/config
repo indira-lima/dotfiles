@@ -232,6 +232,8 @@ assign [class="Code" instance="code"] → $ws2
 assign [class="Insomnia" instance="insomnia"] → $ws3
 assign [class="Genymotion" instance="genymotion"] → $ws3
 assign [class="DBeaver"] → $ws3
+assign [title="DBeaver"] → $ws3
+assign [class="Gimp"] → $ws3
 assign [class="discord" instance="discord"] → $ws4
 for_window [class="Spotify"] move to workspace $ws5
 for_window [class="Stremio"] move to workspace $ws5
@@ -304,6 +306,5 @@ exec "setxkbmap -layout br"
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec --no-startup-id nitrogen --restore 
 exec_always --no-startup-id disable-standby-fs | tee /dev/tty
-exec_always --no-startup-id init-second-monitor
 
 ### end startup applications
