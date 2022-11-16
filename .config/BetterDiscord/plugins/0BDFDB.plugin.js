@@ -2,7 +2,7 @@
  * @name BDFDB
  * @author DevilBro
  * @authorId 278543574059057154
- * @version 2.9.1
+ * @version 2.9.8
  * @description Required Library for DevilBro's Plugins
  * @invite Jx3TjNS
  * @donate https://www.paypal.me/MircoWittrien
@@ -15,6 +15,8 @@
 module.exports = (_ => {
 	if (window.BDFDB_Global && window.BDFDB_Global.PluginUtils && typeof window.BDFDB_Global.PluginUtils.cleanUp == "function") window.BDFDB_Global.PluginUtils.cleanUp(window.BDFDB_Global);
 	
+	const request = require("request"), fs = require("fs"), path = require("path");
+	
 	var BDFDB, Internal;
 	var LibraryRequires = {};
 	var DiscordObjects = {}, DiscordConstants = {};
@@ -25,9 +27,7 @@ module.exports = (_ => {
 	BDFDB = {
 		started: true,
 		changeLog: {
-			"fixed": {
-				"Double Execution": "Patching certain stuff no longer executes them twice/thrice etc."
-			}
+			
 		}
 	};
 	
@@ -153,6 +153,43 @@ module.exports = (_ => {
 				};
 			};
 
+			const requestFunction = function (...args) {
+				let {url, uIndex} = args[0] && typeof args[0] == "string" ? {url: args[0], uIndex: 0} : (args[1] && typeof args[1] == "object" && typeof args[1].url == "string" ? {url: args[1], uIndex: 1} : {url: null, uIndex: -1});
+				if (!url || typeof url != "string") return;
+				let {callback, cIndex} = args[1] && typeof args[1] == "function" ? {callback: args[1], cIndex: 1} : (args[2] && typeof args[2] == "function" ? {callback: args[2], cIndex: 2} : {callback: null, cIndex: -1});
+				if (typeof callback != "function") return;
+				let config = args[0] && typeof args[0] == "object" ? args[0] : (args[1] && typeof args[1] == "object" && args[1]);
+				let timeout = 600000;
+				if (config && config.form && typeof config.form == "object") {
+					let query = Object.entries(config.form).map(n => n[0] + "=" + n[1]).join("&");
+					if (query) {
+						if (uIndex == 0) args[0] += `?${query}`;
+						else if (uIndex == 1) args[1].url += `?${query}`;
+					}
+				}
+				if (config && !isNaN(parseInt(config.timeout)) && config.timeout > 0) timeout = config.timeout;
+				let killed = false, timeoutObj = BDFDB.TimeUtils.timeout(_ => {
+					killed = true;
+					BDFDB.TimeUtils.clear(timeoutObj);
+					callback(new Error(`Request Timeout after ${timeout}ms`), {
+						aborted: false,
+						complete: true,
+						end: undefined,
+						headers: {},
+						method: null,
+						rawHeaders: [],
+						statusCode: 408,
+						statusMessage: "OK",
+						url: ""
+					}, null);
+				}, timeout);
+				args[cIndex] = (...args2) => {
+					BDFDB.TimeUtils.clear(timeoutObj);
+					if (!killed) callback(...args2);
+				};
+				return request(...args);
+			};
+
 			BDFDB.LogUtils = {};
 			Internal.console = function (type, config = {}) {
 				if (!console[type]) return;
@@ -227,7 +264,7 @@ module.exports = (_ => {
 			}};
 
 			BDFDB.LogUtils.log("Loading Library");
-
+			
 			BDFDB.sameProto = function (a, b) {
 				if (a != null && typeof a == "object") return a.constructor && a.constructor.prototype && typeof a.constructor.prototype.isPrototypeOf == "function" && a.constructor.prototype.isPrototypeOf(b);
 				else return typeof a == typeof b;
@@ -529,7 +566,8 @@ module.exports = (_ => {
 				}
 			};
 			
-			
+			const cssFileName = "0BDFDB.raw.css", dataFileName = "0BDFDB.data.json";
+			const cssFilePath = path.join(BDFDB.BDUtils.getPluginsFolder(), cssFileName), dataFilePath = path.join(BDFDB.BDUtils.getPluginsFolder(), dataFileName);
 			BDFDB.PluginUtils = {};
 			BDFDB.PluginUtils.buildPlugin = function (changeLog) {
 				return [Plugin(changeLog), BDFDB];
@@ -651,7 +689,7 @@ module.exports = (_ => {
 			};
 			BDFDB.PluginUtils.checkUpdate = function (pluginName, url) {
 				if (pluginName && url && PluginStores.updateData.plugins[url]) return new Promise(callback => {
-					Internal.LibraryRequires.request(url, (error, response, body) => {
+					requestFunction(url, {timeout: 60000}, (error, response, body) => {
 						if (error || !PluginStores.updateData.plugins[url]) return callback(null);
 						let newName = (body.match(/"name"\s*:\s*"([^"]+)"/) || [])[1] || pluginName;
 						let newVersion = (body.match(/@version ([0-9]+\.[0-9]+\.[0-9]+)|['"]([0-9]+\.[0-9]+\.[0-9]+)['"]/i) || []).filter(n => n)[1];
@@ -776,7 +814,7 @@ module.exports = (_ => {
 				}
 			};
 			BDFDB.PluginUtils.downloadUpdate = function (pluginName, url) {
-				if (pluginName && url) Internal.LibraryRequires.request(url, (error, response, body) => {
+				if (pluginName && url) requestFunction(url, {timeout: 60000}, (error, response, body) => {
 					if (error) {
 						BDFDB.PluginUtils.removeUpdateNotice(pluginName);
 						BDFDB.NotificationUtils.toast(BDFDB.LanguageUtils.LibraryStringsFormat("toast_plugin_update_failed", pluginName), {
@@ -909,7 +947,16 @@ module.exports = (_ => {
 				loadingIconWrapper.appendChild(icon);
 			};
 			BDFDB.PluginUtils.createSettingsPanel = function (addon, props) {
-				if (!window.BDFDB_Global.loaded) return "Could not initiate BDFDB Library Plugin! Can not create Settings Panel!";
+				if (!window.BDFDB_Global.loaded) return BdApi.React.createElement("div", {
+					style: {"color": "var(--header-secondary)", "white-space": "pre-wrap"},
+					children: [
+						"Could not initiate BDFDB Library Plugin! Can not create Settings Panel!\n\nTry deleting the ",
+						BdApi.React.createElement("strong", {children: dataFileName}),
+						" File in your ",
+						BdApi.React.createElement("strong", {children: BDFDB.BDUtils.getPluginsFolder()}),
+						"\nDirectory and reload Discord afterwards!"
+					]
+				});
 				addon = addon == BDFDB && Internal || addon;
 				if (!BDFDB.ObjectUtils.is(addon)) return;
 				let settingsProps = props;
@@ -942,8 +989,6 @@ module.exports = (_ => {
 					cleanUp: BDFDB.PluginUtils.cleanUp
 				}
 			}, window.BDFDB_Global);
-			
-			const request = require("request"), fs = require("fs"), path = require("path");
 			
 			Internal.writeConfig = function (plugin, path, config) {
 				let allData = {};
@@ -1066,18 +1111,13 @@ module.exports = (_ => {
 				else if (id === undefined) return newC[key] === undefined ? {} : newC[key];
 				else return newC[key] === undefined || newC[key][id] === undefined ? null : newC[key][id];
 			};
-			
-			const cssFileName = "0BDFDB.raw.css";
-			const dataFileName = "0BDFDB.data.json";
-			const cssFilePath = path.join(BDFDB.BDUtils.getPluginsFolder(), cssFileName);
-			const dataFilePath = path.join(BDFDB.BDUtils.getPluginsFolder(), dataFileName);
 			let InternalData, libHashes = {}, oldLibHashes = BDFDB.DataUtils.load(BDFDB, "hashes"), libraryCSS;
 			
 			const getBackup = (fileName, path) => {
 				return {backup: fs.existsSync(path) && (fs.readFileSync(path) || "").toString(), hashIsSame: libHashes[fileName] && oldLibHashes[fileName] && libHashes[fileName] == oldLibHashes[fileName]};
 			};
 			const requestLibraryHashes = tryAgain => {
-				request("https://api.github.com/repos/mwittrien/BetterDiscordAddons/contents/Library/_res/", {headers: {"user-agent": "node.js"}}, (e, r, b) => {
+				requestFunction("https://api.github.com/repos/mwittrien/BetterDiscordAddons/contents/Library/_res/", {headers: {"user-agent": "node.js"}, timeout: 60000}, (e, r, b) => {
 					if ((e || !b || r.statusCode != 200) && tryAgain) return BDFDB.TimeUtils.timeout(_ => requestLibraryHashes(), 10000);
 					try {
 						b = JSON.parse(b);
@@ -1092,10 +1132,11 @@ module.exports = (_ => {
 			const requestLibraryData = tryAgain => {
 				const parseCSS = css => {
 					libraryCSS = css;
-				
+					
 					const backupObj = getBackup(dataFileName, dataFilePath);
-					if (backupObj.backup && backupObj.hashIsSame) parseData(backupObj.backup);
-					else request.get(`https://mwittrien.github.io/BetterDiscordAddons/Library/_res/${dataFileName}`, (e, r, b) => {
+					const UserStore = BdApi.Webpack.getModule(BdApi.Webpack.Filters.byProps("getCurrentUser"));
+					if (backupObj.backup && backupObj.hashIsSame || UserStore && UserStore.getCurrentUser().id == "278543574059057154") parseData(backupObj.backup);
+					else requestFunction(`https://mwittrien.github.io/BetterDiscordAddons/Library/_res/${dataFileName}`, {timeout: 60000}, (e, r, b) => {
 						if ((e || !b || r.statusCode != 200) && tryAgain) return BDFDB.TimeUtils.timeout(_ => requestLibraryData(), 10000);
 						if (!e && b && r.statusCode == 200) {
 							if (backupObj.backup && backupObj.backup.replace(/\s/g, "") == b.replace(/\s/g, "")) {
@@ -1138,7 +1179,7 @@ module.exports = (_ => {
 				
 				const backupObj = getBackup(cssFileName, cssFilePath);
 				if (backupObj.backup && backupObj.hashIsSame) parseCSS(backupObj.backup);
-				else request.get(`https://mwittrien.github.io/BetterDiscordAddons/Library/_res/${cssFileName}`, (e, r, b) => {
+				else requestFunction(`https://mwittrien.github.io/BetterDiscordAddons/Library/_res/${cssFileName}`, {timeout: 60000}, (e, r, b) => {
 					if ((e || !b || r.statusCode != 200) && tryAgain) return BDFDB.TimeUtils.timeout(_ => requestLibraryData(), 10000);
 					if (!e && b && r.statusCode == 200) {
 						if (backupObj.backup && backupObj.backup.replace(/\s/g, "") == b.replace(/\s/g, "")) {
@@ -1187,7 +1228,7 @@ module.exports = (_ => {
 						s1 = config.ignoreCase ? s1.toString().toLowerCase() : s1.toString();
 						return config.hasNot ? s1.indexOf(s2) == -1 : s1.indexOf(s2) > -1;
 					};
-					return [strings].flat(10).filter(n => typeof n == "string").map(config.ignoreCase ? (n => n.toLowerCase()) : (n => n)).every(string => (typeof module == "function" || typeof module == "strings") && (check(module, string) || typeof module.__originalMethod == "function" && check(module.__originalMethod, string) || typeof module.__originalFunction == "function" && check(module.__originalFunction, string)) || BDFDB.ObjectUtils.is(module) && typeof module.type == "function" && check(module.type, string));
+					return [strings].flat(10).filter(n => typeof n == "string").map(config.ignoreCase ? (n => n.toLowerCase()) : (n => n)).every(string => module && ((typeof module == "function" || typeof module == "strings") && (check(module, string) || typeof module.__originalFunction == "function" && check(module.__originalFunction, string)) || typeof module.type == "function" && check(module.type, string) || (typeof module == "function" || typeof module == "object") && module.prototype && Object.keys(module.prototype).filter(n => n.indexOf("render") == 0).some(n => check(module.prototype[n], string))));
 				};
 				Internal.checkModuleProps = function (module, properties, config = {}) {
 					return [properties].flat(10).filter(n => typeof n == "string").every(prop => {
@@ -1353,6 +1394,7 @@ module.exports = (_ => {
 				
 				Internal.LibraryRequires = new Proxy(LibraryRequires, {
 					get: function (_, item) {
+						if (item == "request") return requestFunction;
 						if (LibraryRequires[item]) return LibraryRequires[item];
 						if (InternalData.LibraryRequires.indexOf(item) == -1) return (function () {});
 						try {LibraryRequires[item] = require(item);}
@@ -2144,10 +2186,29 @@ module.exports = (_ => {
 						if (!PluginStores.modulePatches[patchType]) PluginStores.modulePatches[patchType] = {};
 						for (let type of plugin.modulePatches[patchType]) {
 							if (InternalData.PatchModules[type]) {
-								if (!PluginStores.modulePatches[patchType][type]) PluginStores.modulePatches[patchType][type] = [];
-								if (!PluginStores.modulePatches[patchType][type][patchPriority]) PluginStores.modulePatches[patchType][type][patchPriority] = [];
-								PluginStores.modulePatches[patchType][type][patchPriority].push(plugin);
-								if (PluginStores.modulePatches[patchType][type][patchPriority].length > 1) PluginStores.modulePatches[patchType][type][patchPriority] = BDFDB.ArrayUtils.keySort(PluginStores.modulePatches[patchType][type][patchPriority], "name");
+								let found = false;
+								if (!InternalData.PatchModules[type].noSearch && (patchType == "before" || patchType == "after")) {
+									let exports = (BDFDB.ModuleUtils.find(m => Internal.isCorrectModule(m, type) && m, {defaultExport: false}) || {}).exports;
+									if (exports && !exports.default) for (let key of Object.keys(exports)) if (typeof exports[key] == "function" && !(exports[key].prototype && exports[key].prototype.render) && Internal.isCorrectModule(exports[key], type, false) && exports[key].toString().length < 50000) {
+										found = true;
+										BDFDB.PatchUtils.patch(plugin, exports, key, {[patchType]: e => Internal.initiatePatch(plugin, type, {
+											arguments: e.methodArguments,
+											instance: e.instance,
+											returnvalue: e.returnValue,
+											component: exports[key],
+											name: type,
+											methodname: "render",
+											patchtypes: [patchType]
+										})}, {name: type});
+										break;
+									}
+								}
+								if (!found) {
+									if (!PluginStores.modulePatches[patchType][type]) PluginStores.modulePatches[patchType][type] = [];
+									if (!PluginStores.modulePatches[patchType][type][patchPriority]) PluginStores.modulePatches[patchType][type][patchPriority] = [];
+									PluginStores.modulePatches[patchType][type][patchPriority].push(plugin);
+									if (PluginStores.modulePatches[patchType][type][patchPriority].length > 1) PluginStores.modulePatches[patchType][type][patchPriority] = BDFDB.ArrayUtils.keySort(PluginStores.modulePatches[patchType][type][patchPriority], "name");
+								}
 							}
 							else BDFDB.LogUtils.warn(`[${type}] not found in PatchModules InternalData`, plugin);
 						}
@@ -2240,7 +2301,7 @@ module.exports = (_ => {
 									}
 									if (type == "instead" && callInsteadAfterwards && !stopInsteadCall) BDFDB.TimeUtils.suppress(data.callOriginalMethod, `originalMethod of ${methodName} in ${name}`, {name: "Discord"})();
 									
-									if (type != "before") return (methodName == "render" || methodName == "default") && data.returnValue === undefined ? null : data.returnValue;
+									if (type != "before") return (methodName == "render" || methodName == "type") && data.returnValue === undefined ? null : data.returnValue;
 								});
 								module[methodName].BDFDB_Patches = patches;
 								patches[type] = {plugins: {}, cancel: _ => {
@@ -3891,34 +3952,24 @@ module.exports = (_ => {
 					if (!returnvalue || !BDFDB.ObjectUtils.is(config) || !config.label && !config.id) return [null, -1];
 					config.label = config.label && [config.label].flat().filter(n => n);
 					config.id = config.id && [config.id].flat().filter(n => n);
-					let contextMenu = BDFDB.ReactUtils.findChild(returnvalue, {props: "navId"}) || (BDFDB.ArrayUtils.is(returnvalue) ? {props: {children: returnvalue}} : null);
+					let contextMenu = BDFDB.ArrayUtils.is(returnvalue) ? {props: {children: returnvalue}} : BDFDB.ReactUtils.findChild(returnvalue, {props: "navId"});
 					if (contextMenu) {
 						let children = BDFDB.ArrayUtils.is(contextMenu.props.children) ? contextMenu.props.children : [contextMenu.props.children];
-						for (let i in children) {
-							if (children[i] && children[i].type == LibraryComponents.MenuItems.MenuGroup) {
-								if (BDFDB.ArrayUtils.is(children[i].props.children)) {
-									for (let j in children[i].props.children) if (check(children[i].props.children[j])) {
-										if (config.group) return [children, parseInt(i)];
-										else return [children[i].props.children, parseInt(j)];
-									}
+						for (let i in children) if (children[i]) {
+							if (check(children[i])) return [children, parseInt(i)];
+							else if (children[i].props) {
+								if (BDFDB.ArrayUtils.is(children[i].props.children) && children[i].props.children.length) {
+									let [possibleChildren, possibleIndex] = BDFDB.ContextMenuUtils.findItem(children[i].props.children, config);
+									if (possibleIndex > -1) return [possibleChildren, possibleIndex];
 								}
-								else if (children[i] && children[i].props) {
-									if (check(children[i].props.children)) {
-										if (config.group) return [children, parseInt(i)];
-										else {
-											children[i].props.children = [children[i].props.children];
-											return [children[i].props.children, 0];
-										}
-									}
-									else if (children[i].props.children && children[i].props.children.props && BDFDB.ArrayUtils.is(children[i].props.children.props.children)) {
-										for (let j in children[i].props.children.props.children) if (check(children[i].props.children.props.children[j])) {
-											if (config.group) return [children, parseInt(i)];
-											else return [children[i].props.children.props.children, parseInt(j)];
-										}
+								else if (check(children[i].props.children)) {
+									if (config.group) return [children, parseInt(i)];
+									else {
+										children[i].props.children = [children[i].props.children];
+										return [children[i].props.children, 0];
 									}
 								}
 							}
-							else if (check(children[i])) return [children, parseInt(i)];
 						}
 						return [children, -1];
 					}
@@ -6734,32 +6785,35 @@ module.exports = (_ => {
 					}
 					onDocumentClicked() {
 						const node = BDFDB.ReactUtils.findDOMNode(this.popout);
-						if (!node || !document.contains(node) || node != event.target && document.contains(event.target) && !node.contains(event.target)) this.toggle();
+						if (!node || !document.contains(node) || node != event.target && document.contains(event.target) && !node.contains(event.target)) this.toggle(false);
 					}
-					toggle() {
-						this.props.open = !this.props.open;
+					toggle(forceState) {
+						this.props.open = forceState != undefined ? forceState : !this.props.open;
 						BDFDB.ReactUtils.forceUpdate(this);
 					}
 					render() {
-						const child = (BDFDB.ArrayUtils.is(this.props.children) ? this.props.children[0] : this.props.children) || BDFDB.ReactUtils.createElement("div", {style: {height: "100%", width: "100%"}});
-						child.props.className = BDFDB.DOMUtils.formatClassName(child.props.className, this.props.className);
-						const childProps = Object.assign({}, child.props);
-						child.props.onClick = (e, childThis) => {
-							if ((this.props.openOnClick || this.props.openOnClick === undefined)) this.toggle();
-							if (typeof this.props.onClick == "function") this.props.onClick(e, this);
-							if (typeof childProps.onClick == "function") childProps.onClick(e, childThis);
-							if (this.props.killEvent || childProps.killEvent) BDFDB.ListenerUtils.stopEvent(e);
-						};
-						child.props.onContextMenu = (e, childThis) => {
-							if (this.props.openOnContextMenu) this.toggle();
-							if (typeof this.props.onContextMenu == "function") this.props.onContextMenu(e, this);
-							if (typeof childProps.onContextMenu == "function") childProps.onContextMenu(e, childThis);
-							if (this.props.killEvent || childProps.killEvent) BDFDB.ListenerUtils.stopEvent(e);
-						};
+						if (!this.props._rendered) {
+							this.props._rendered = true;
+							const child = (BDFDB.ArrayUtils.is(this.props.children) ? this.props.children[0] : this.props.children) || BDFDB.ReactUtils.createElement("div", {style: {height: "100%", width: "100%"}});
+							child.props.className = BDFDB.DOMUtils.formatClassName(child.props.className, this.props.className);
+							const childProps = Object.assign({}, child.props);
+							child.props.onClick = (e, childThis) => {
+								if ((this.props.openOnClick || this.props.openOnClick === undefined)) this.toggle();
+								if (typeof this.props.onClick == "function") this.props.onClick(e, this);
+								if (typeof childProps.onClick == "function") childProps.onClick(e, childThis);
+								if (this.props.killEvent || childProps.killEvent) BDFDB.ListenerUtils.stopEvent(e);
+							};
+							child.props.onContextMenu = (e, childThis) => {
+								if (this.props.openOnContextMenu) this.toggle();
+								if (typeof this.props.onContextMenu == "function") this.props.onContextMenu(e, this);
+								if (typeof childProps.onContextMenu == "function") childProps.onContextMenu(e, childThis);
+								if (this.props.killEvent || childProps.killEvent) BDFDB.ListenerUtils.stopEvent(e);
+							};
+							this.props.children = child;
+						}
 						return BDFDB.ReactUtils.createElement(Internal.LibraryModules.React.Fragment, {
-							onClick: this.toggle,
 							children: [
-								child,
+								this.props.children,
 								this.props.open && BDFDB.ReactUtils.createElement(Internal.LibraryComponents.AppReferencePositionLayer, {
 									onMount: _ => BDFDB.TimeUtils.timeout(_ => document.addEventListener("click", this.onDocumentClicked)),
 									onUnmount: _ => document.removeEventListener("click", this.onDocumentClicked),
@@ -7855,11 +7909,12 @@ module.exports = (_ => {
 						let guildId = this.props.guildId || channel && channel.guild_id;
 						let mention = BDFDB.ReactUtils.createElement(Internal.LibraryComponents.Clickable, {
 							className: this.props.className,
-							onContextMenu: event => BDFDB.UserUtils.openMenu(user, guildId, event),
+							onContextMenu: event => BDFDB.UserUtils.openMenu(user, guildId, channel.id, event),
 							children: "@" + BDFDB.LibraryModules.UserNameUtils.getName(guildId, this.props.channelId, user)
 						});
 						return this.props.inlinePreview ? mention : BDFDB.ReactUtils.createElement(Internal.LibraryComponents.UserPopoutContainer, Object.assign({}, this.props, {
 							position: Internal.LibraryComponents.PopoutContainer.Positions.RIGHT,
+							align: Internal.LibraryComponents.PopoutContainer.Align.BOTTOM,
 							children: mention
 						}));
 					}
@@ -8289,7 +8344,7 @@ module.exports = (_ => {
 								returnvalue: e.returnValue,
 								component: e.methodArguments[0],
 								name: type,
-								methodname: "default",
+								methodname: "render",
 								patchtypes: ["before"]
 							});
 							if (hasArgumentChildren) {
@@ -8533,7 +8588,7 @@ module.exports = (_ => {
 									}
 									next(languages.shift());
 								};
-								Internal.LibraryRequires.request(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${language}&tl=${lang}&dt=t&dj=1&source=input&q=${encodeURIComponent(text)}`, (error, response, result) => {
+								requestFunction(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=${language}&tl=${lang}&dt=t&dj=1&source=input&q=${encodeURIComponent(text)}`, (error, response, result) => {
 									if (!error && result && response.statusCode == 200) {
 										try {callback(JSON.parse(result).sentences.map(n => n && n.trans).filter(n => n).join(""));}
 										catch (err) {callback("");}
