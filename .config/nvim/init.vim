@@ -55,6 +55,18 @@ set visualbell          " blink cursor on error, instead of beeping
 nmap j gj
 nmap k gk
 
+" Center screen (zz) after going or down half page
+nnoremap <C-u> <C-u>zz
+nnoremap <C-d> <C-d>zz
+
+" run macros on all selected lines without breaking on
+" the first non-matching line
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
 
 """" Vim Appearance
 
@@ -63,10 +75,12 @@ nmap k gk
 
 set termguicolors
 
+" Better folded code visualization
+hi Folded guibg=016
+
 " use filetype-based syntax highlighting, ftplugins, and indentation
 syntax enable
 filetype plugin indent on
-
 
 """" Tab settings
 
@@ -76,7 +90,6 @@ set softtabstop=2       " backspace after pressing <TAB> will remove up to this 
 
 set autoindent          " copy indent from current line when starting a new line
 set smartindent         " even better autoindent (e.g. add indent after '{')
-
 
 """" Search settings
 
