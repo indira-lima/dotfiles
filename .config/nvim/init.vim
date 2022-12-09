@@ -14,6 +14,7 @@ Plug 'luochen1990/rainbow'												" Rainbow brackets
 Plug 'neoclide/coc.nvim', {'branch': 'release'}		" Code completion for Neovim
 Plug 'pangloss/vim-javascript'										" JS syntax highlighting and formatting
 Plug 'tpope/vim-fugitive'													" ('so good that should be illegal') Git plugin
+Plug 'vimsence/vimsence'													" Discord rich presence for Vim
 
 " Initialize plugin system
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
@@ -34,6 +35,13 @@ nmap <c-g> :Git<cr>
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
 let g:javascript_plugin_jsdoc = 1		" enable syntax highlight for JS Doc
+
+" Vimsence
+let g:vimsence_small_text = 'NeoVim'
+let g:vimsence_small_image = 'neovim'
+let g:vimsence_editing_details = 'Editando na velocidade da luz: {}'
+let g:vimsence_editing_state = 'Trabalhando em: {}'
+let g:vimsence_file_explorer_details = 'Onde é que tava aquele arquivo?'
 
 """" Basic Behavior
 
