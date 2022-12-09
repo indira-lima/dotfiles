@@ -11,10 +11,11 @@ Plug 'vim-airline/vim-airline'										" Better status bar
 Plug 'junegunn/fzf'																" Fuzzy Finder config
 Plug 'junegunn/fzf.vim'														" Fuzzy Finder for Vim
 Plug 'luochen1990/rainbow'												" Rainbow brackets
-Plug 'neoclide/coc.nvim', {'branch': 'release'}		" Code completion for Neovim
-Plug 'pangloss/vim-javascript'										" JS syntax highlighting and formatting
+Plug 'neoclide/coc.nvim', {'branch': 'release'}		" Code completion for Neovim 
+Plug 'pangloss/vim-javascript'
 Plug 'tpope/vim-fugitive'													" ('so good that should be illegal') Git plugin
 Plug 'vimsence/vimsence'													" Discord rich presence for Vim
+Plug 'ThePrimeagen/vim-be-good'										" Vim mastering games
 
 " Initialize plugin system
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
