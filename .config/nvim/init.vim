@@ -27,8 +27,9 @@ call plug#end()
 
 " Redefine emmet trigger key (still needs the trailing comma to fire: <TAB>,)
 let g:user_emmet_leader_key='<TAB>'
-nmap <C-e> :Files
-nmap <C-n> :NERDTreeToggle
+nmap <c-e> :Files<cr>
+nmap <c-n> :NERDTreeToggle<cr>
+nmap <c-g> :Git<cr>
 
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 
