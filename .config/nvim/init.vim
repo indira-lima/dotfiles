@@ -99,6 +99,9 @@ set hlsearch            " highlight matches
 " turn off search highlighting with <CR> (carriage-return)
 nnoremap <CR> :nohlsearch<CR><CR>
 
+" use \\ for escape
+" http://vim.wikia.com/wiki/Avoid_the_escape_key
+inoremap \\ <Esc>
 
 """" Miscellaneous settings that might be worth enabling
 
@@ -106,7 +109,54 @@ nnoremap <CR> :nohlsearch<CR><CR>
 set background=dark    " configure Vim to use brighter colors
 set autoread           " autoreload the file in Vim if it has been changed outside of Vim
 
-""" Coc Basic configuration
+"""" Neovim specific shortcuts (uses the leader key)
+
+" Shortcut to edit THIS configuration file: (e)dit (c)onfiguration
+nnoremap <silent> <leader>ec :e $MYVIMRC<CR>
+
+" Shortcut to source (reload) THIS configuration file after editing it: (s)ource (c)onfiguraiton
+nnoremap <silent> <leader>sc :source $MYVIMRC<CR>
+
+" toggle line numbers
+nnoremap <silent> <leader>n :set number! number?<CR>
+
+" toggle relative numbers
+nnoremap <silent> <leader>N :set relativenumber! relativenumber?<CR>
+
+" toggle buffer (switch between current and last buffer)
+nnoremap <silent> <leader>bb <C-^>
+
+" horizontal split with new buffer
+nnoremap <silent> <leader>bh :new<CR>
+
+" vertical split with new buffer
+nnoremap <silent> <leader>bv :vnew<CR>
+
+" Undo hunk (Git Gutter)
+nnoremap <silent> <leader>uh :GitGutterUndoHunk<CR>
+
+" improved keyboard navigation
+nnoremap <leader>h <C-w>h
+nnoremap <leader>j <C-w>j
+nnoremap <leader>k <C-w>k
+nnoremap <leader>l <C-w>l
+
+" Quite buffer
+nnoremap <silent> <leader>qq :q<CR>
+
+" Write file
+nnoremap <silent> <leader>w :w<CR>
+
+" Write file to git
+nnoremap <silent> <leader>gw :Gwrite<CR>
+
+" Show git status
+nnoremap <silent> <leader>gs :Git<CR>
+
+" Copy selection to clipboard
+vnoremap <silent> <leader>cc "+y
+
+"""" Coc Basic configuration
 
 " May need for vim (not neovim) since coc.nvim calculate byte offset by count
 " utf-8 byte sequence.
@@ -162,6 +212,9 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+" Coc Fuzzy Finder
+nmap <silent> <leader>F :Ag<CR>
+
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call ShowDocumentation()<CR>
 
@@ -181,7 +234,9 @@ nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+
+" Formatting entire code
+nmap <leader>f  <Plug>(coc-format)
 
 augroup mygroup
   autocmd!
