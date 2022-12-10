@@ -1,11 +1,10 @@
 # My linux rice
 
-## Things to configure:
-	- all the stuff in configure_ubuntu.sh
-	- dotfiles
+## repository
+	- [ ] Add a README.md with screenshots
 
-## i3 configuration
-	- .i3/config
+## dotfiles
+	- i3wm
 		- [x] keybindings
 		- [x] startup apps
 		- [x] resize shortcuts
