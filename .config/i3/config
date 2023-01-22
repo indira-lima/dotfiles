@@ -322,4 +322,7 @@ exec --no-startup-id nitrogen --restore
 exec_always --no-startup-id disable-standby-fs | tee /dev/tty
 # exec_always --no-startup-id 'init-second-monitor > /tmp/init-2nd-monitor.log 2> /tmp/init-2nd-monitor.log'
 
+# Enable tapping on touchpad
+exec --no-startup-id 'xinput set-prop "MSFT0001:00 06CB:CE2D Touchpad" "libinput Tapping Enabled" 1'
+
 ### end startup applications
