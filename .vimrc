@@ -1,25 +1,41 @@
-"""" Enable Vundle: vim plugin manager
+" vim-plug initialization
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-" required before Vundle initialization
-set nocompatible        " disable compatibility mode with vi
-"filetype off            " disable filetype detection (but re-enable later, see below)
+" Put Plug commands between `call plug#begin`and `call plug#end`
+call plug#begin()
 
-" set the runtime path to include Vundle, and initialize
-" set rtp+=~/.vim/bundle/Vundle.vim
-" call vundle#begin()
-" Plugin 'VundleVim/Vundle.vim'
-" Plugin 'wting/rust.vim' " enable syntax highlighting for rust
-" call vundle#end()
+Plug 'preservim/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+Plug 'PhilRunninger/nerdtree-buffer-ops'
+Plug 'ryanoasis/vim-devicons'
+Plug 'PhilRunninger/nerdtree-visual-selection'
+Plug 'mattn/emmet-vim'
 
+" Initialize plugin system
+" - Automatically executes `filetype plugin indent on` and `syntax enable`.
+call plug#end()
+" You can revert the settings after the call like so:
+"   filetype indent off   " Disable file-type-specific indentation
+"   syntax off            " Disable syntax highlighting
+
+
+"""" Plugins configuration
+
+" Redefine emmet trigger key
+let g:user_emmet_leader_key='<TAB>'
 
 """" Basic Behavior
 
 set number              " show line numbers
+set relativenumber      " show numbers relative to current line
 set wrap                " wrap lines
 set encoding=utf-8      " set encoding to UTF-8 (default was "latin1")
 set mouse=a             " enable mouse support (might not work well on Mac OS X)
 set wildmenu            " visual autocomplete for command menu
-set lazyredraw          " redraw screen only when we need to
 set showmatch           " highlight matching parentheses / brackets [{()}]
 set laststatus=2        " always show statusline (even with only single window)
 set ruler               " show line and column number of the cursor on right side of statusline
@@ -48,7 +64,6 @@ filetype plugin indent on
 """" Tab settings
 
 set tabstop=2           " width that a <TAB> character displays as
-set expandtab           " convert <TAB> key-presses to spaces
 set shiftwidth=2        " number of spaces to use for each step of (auto)indent
 set softtabstop=2       " backspace after pressing <TAB> will remove up to this many spaces
 
