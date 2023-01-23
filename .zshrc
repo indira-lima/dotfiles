@@ -150,6 +150,6 @@ alias cdqs='cd ~/code/quaestum'
 
 source ~/code/linux-utils/commands.sh
 export TERMINAL='gnome-terminal'
-export EDITOR=neovim
+export EDITOR=nvim
 export PATH="$PATH:/opt/genymobile/genymotion"
 export PATH=$PATH:/home/schuster/.spicetify
