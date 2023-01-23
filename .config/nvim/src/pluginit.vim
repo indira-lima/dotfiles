@@ -18,7 +18,7 @@ runtime src/basic/plugins/list.vim
 
 if (enablenvim)
 	" source all neovim-only plugins
-	runtime src/neovim/plugins/list.nvim
+	runtime src/neovim/plugins/list.vim
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
