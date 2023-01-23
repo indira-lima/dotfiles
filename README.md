@@ -1,5 +1,8 @@
 # My linux rice
 
+While I don't spend some time formatting a decent README, here
+is the roadmap
+
 ## repository
 	- [ ] Add a README.md with screenshots
 
