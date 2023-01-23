@@ -1,5 +1,7 @@
 """" Plugins configuration
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " source plugins keyboard shortcuts
 runtime src/basic/plugins/keybindings.vim
 
