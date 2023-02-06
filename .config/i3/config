@@ -172,6 +172,8 @@ bindsym $mod+Shift+r restart
 # shutdown / restart / suspend...
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (CTRL+s) shutdown
 
+set $i3lockwall i3lock -efi $HOME/.config/i3/lock.png
+
 mode "$mode_system" {
     bindsym l exec --no-startup-id $i3lockwall, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
@@ -248,6 +250,7 @@ assign [class="DBeaver"] → $ws3
 assign [title="DBeaver"] → $ws3
 assign [class="Gimp"] → $ws3
 assign [class="Anydesk"] → $ws3
+assign [class="Postman"] → $ws3
 assign [class="discord" instance="discord"] → $ws4
 for_window [class="Spotify"] move to workspace $ws5
 for_window [class="Stremio"] move to workspace $ws5
@@ -312,7 +315,7 @@ exec --no-startup-id i3-msg 'exec opera'
 exec --no-startup-id i3-msg 'workspace $ws2; exec i3-sensible-terminal'
 exec --no-startup-id i3-msg 'exec discord'
 exec --no-startup-id i3-msg 'exec keepassxc'
-exec --no-startup-id redshift-gtk
+# exec --no-startup-id redshift-gtk
 exec --no-startup-id flameshot
 #exec --no-startup-id "i3-battery-popup -n -L 20 -t 10"
 exec_always --no-startup-id ~/.config/compton/launch.sh 
@@ -320,7 +323,7 @@ exec "setxkbmap -layout br"
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec --no-startup-id nitrogen --restore 
 exec_always --no-startup-id disable-standby-fs | tee /dev/tty
-# exec_always --no-startup-id 'init-second-monitor > /tmp/init-2nd-monitor.log 2> /tmp/init-2nd-monitor.log'
+exec_always --no-startup-id 'init-second-monitor > /tmp/init-2nd-monitor.log 2> /tmp/init-2nd-monitor.log'
 
 # Enable tapping on touchpad
 exec --no-startup-id 'xinput set-prop "MSFT0001:00 06CB:CE2D Touchpad" "libinput Tapping Enabled" 1'
