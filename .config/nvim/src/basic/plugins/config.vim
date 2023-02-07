@@ -1,4 +1,5 @@
 """" Plugins configuration
+"""" Uses vim-plug and plugin manager, must be included after plug#end
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

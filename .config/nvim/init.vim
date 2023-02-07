@@ -10,6 +10,8 @@
 "" Environment configuration
 let enablenvim=1
 
+echo $VIMRUNTIME
+
 "" Plugin manager initialization
 runtime src/pluginit.vim
 
@@ -22,5 +24,3 @@ if (enablenvim)
 endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-

@@ -16,7 +16,8 @@ set background=dark     " configure Vim to use brighter colors
 set autoread            " autoreload the file in Vim if it has been changed outside of Vim
 set autoindent          " copy indent from current line when starting a new line
 set smartindent         " even better autoindent (e.g. add indent after '{')
-
+set splitbelow					" new horizontal splits are on the bottom
+set splitright					" new vertical splits are on the right
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """" Vim Appearance

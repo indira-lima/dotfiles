@@ -1,3 +1,6 @@
+"""" List of all Vim plugins
+"""" Uses vim-plug, must be included between plug#begin and plug#end
+
 " NERDTree and complements
 Plug 'preservim/nerdtree'													" File navigator for Vim
 Plug 'ryanoasis/vim-devicons'											" Better icons for Nerd Tree
@@ -18,7 +21,9 @@ Plug 'tpope/vim-fugitive'													" ('so good that should be illegal') Git p
 
 " Text edition
 Plug 'tpope/vim-commentary'												" Comment code with gcc (line) and gc (block)
-Plug 'luochen1990/rainbow'												" Rainbow brackets
+" Plug 'luochen1990/rainbow'												" Rainbow brackets
+Plug 'tpope/vim-surround'													" Easy surround parts of text
+Plug 'ap/vim-css-color'														" Highlight hex colors
 " Plug 'SirVer/ultisnips'														" Better snippets plugin
 " Plug 'Dahan-Schuster/vim-react-native-snippets'		" My own react native snippets
 
@@ -27,7 +32,7 @@ Plug 'luochen1990/rainbow'												" Rainbow brackets
 " Vim interface
 Plug 'yuttie/comfortable-motion.vim'							" Smooth scrolling
 Plug 'vim-airline/vim-airline'										" Better status bar	
-Plug 'mhinz/vim-startify'
+Plug 'mhinz/vim-startify'													" Vim start page
 "Plug 'glepnir/dashboard-nvim'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""

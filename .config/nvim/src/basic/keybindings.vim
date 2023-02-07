@@ -20,3 +20,15 @@ nmap k gk
 nnoremap <C-u> <C-u>zz
 nnoremap <C-d> <C-d>zz
 
+" Zoom active buffer with Zi (Zoom In) 
+noremap Zi <c-w>_ \| <c-w>\|
+
+" Restet zoom with Zo (Zoom Out) (set all open buffers to equal size)
+noremap Zo <c-w>=
+
+" Make b incluvise by default
+noremap b vb
+
+" run macros on all selected lines without breaking on
+" the first non-matching line
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
