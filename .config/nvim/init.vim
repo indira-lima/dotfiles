@@ -10,17 +10,21 @@
 "" Environment configuration
 let enablenvim=1
 
-echo $VIMRUNTIME
+" Configura o caminho de busca de arquivos de script do Neovim
+" A sintaxe .,, significa que o Neovim primeiro procurará arquivos
+" na pasta corrente, depois na pasta do usuário e por fim em
+" outras pastas padrão
+set path=.,, " 
 
-"" Plugin manager initialization
-runtime src/pluginit.vim
+" Adiciona a pasta de configuração do Neovim ao início da lista
+" de pastas de pacotes, fazendo o Neovim procurar por plugins
+" primeiro na pasta ~/.config/nvim
+execute 'set packpath^=' . stdpath('config')
 
-"" Basic vim initialization
-runtime src/basic/init.vim
+" Detect filetypes and run filetype plugins
+filetype on
+filetype plugin on
+filetype indent on
 
-if (enablenvim)
-	"" Neovim initialization
-	runtime src/neovim/init.vim
-endif
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Leaves the rest of the configuration to Vim's own initialization
+" system. The folder pack/my/start contains the plugins config files

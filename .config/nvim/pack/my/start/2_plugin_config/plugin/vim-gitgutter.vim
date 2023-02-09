@@ -1,0 +1,1 @@
+PackAdd airblade/vim-gitgutter
