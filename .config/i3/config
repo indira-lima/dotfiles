@@ -211,16 +211,10 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-# Rename workspaces
-bindsym $mod+r exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
-
 # Open KeepassXC
 bindsym $mod+Ctrl+k exec "keepassxc ~/.keepass/Passwords.kdbx"
 
-
-# bind my i3-scrot to print key
-#bindsym --release $mod+Print exec "i3-scrot -scs"
-#bindsym --release Print exec "i3-scrot -sc"
+bindsym $mod+Shift+x exec "xkill"
 
 # Flameshot for screenshots
 bindsym Print exec --no-startup-id flameshot gui
@@ -323,9 +317,12 @@ exec "setxkbmap -layout br"
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec --no-startup-id nitrogen --restore 
 exec_always --no-startup-id disable-standby-fs | tee /dev/tty
-exec_always --no-startup-id 'init-second-monitor > /tmp/init-2nd-monitor.log 2> /tmp/init-2nd-monitor.log'
+# exec_always --no-startup-id 'init-second-monitor > /tmp/init-2nd-monitor.log 2> /tmp/init-2nd-monitor.log'
 
 # Enable tapping on touchpad
-exec --no-startup-id 'xinput set-prop "MSFT0001:00 06CB:CE2D Touchpad" "libinput Tapping Enabled" 1'
+exec_always --no-startup-id 'xinput set-prop "MSFT0001:00 06CB:CE2D Touchpad" "libinput Tapping Enabled" 1'
+
+# Disable screen saver
+exec_always --no-startup-id 'xset s off'
 
 ### end startup applications
