@@ -1,0 +1,35 @@
+snippet rnfc "React Native Functional Component" b
+import React from "react";
+import { View } from "react-native";
+
+/**
+ * ${2:"$1 documentation"}
+ */
+const ${1:`!p snip.rv = snip.basename`} = ($3) => {
+	return (
+		<${4:View}>
+			${5:{/*TODO: Component body*/}}
+		</${4/^(\w+).*/$1/}>
+	);
+};
+
+export default $1;
+endsnippet
+
+snippet rfc "React Functional Component" b
+import React from "react";
+
+/**
+ * ${2:"$1 documentation"}
+ */
+const ${1:`!p snip.rv = snip.basename`} = ($3) => {
+	return (
+		<${4:div}>
+			${5:{/*TODO: Component body*/}}
+		</${4/^(\w+).*/$1/}>
+	);
+};
+
+export default $1;
+endsnippet
+
