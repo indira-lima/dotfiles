@@ -11,10 +11,6 @@
 
 set $mod Mod4
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-font pango:monospace 8
-
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
@@ -51,24 +47,38 @@ bindsym $mod+shift+d exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
-# start rofi (a program launcher)
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --entry-type=name --dmenu='rofi -i -opacity \"90\" -dmenu -p "run:"'
+# move focused workspace between monitors
+bindsym $mod+Shift+greater move workspace to output right
+bindsym $mod+Shift+less move workspace to output left
 
-# change focus
+# change focus with vim motions
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# change focus with arrows
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
+# move with vim motions
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# move with arrows
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+Ctrl+h split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -95,16 +105,16 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1: Web"
-set $ws2 "2: >_"
-set $ws3 "3: Tools"
-set $ws4 "4: Comm"
-set $ws5 "5: Media"
-set $ws6 "6: Games"
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
-set $ws10 "10: Keepass"
+set $ws10 "10"
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -162,6 +172,8 @@ bindsym $mod+Shift+r restart
 # shutdown / restart / suspend...
 set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (CTRL+s) shutdown
 
+set $i3lockwall i3lock -efi $HOME/.config/i3/lock.png
+
 mode "$mode_system" {
     bindsym l exec --no-startup-id $i3lockwall, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
@@ -187,7 +199,6 @@ bindsym $mod+i resize shrink height 10 px or 10 ppt
 bindsym $mod+o resize grow width 10 px or 10 ppt
 
 # My shortcuts
-bindsym $mod+l exec i3lock --color 000000
 bindsym $mod+e exec nautilus
 
 # Sreen brightness controls
@@ -200,11 +211,16 @@ bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 
-# Rename workspaces
-bindsym $mod+r exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
-
 # Open KeepassXC
-bindsym $mod+k exec "keepassxc ~/.keepass/Passwords.kdbx"
+bindsym $mod+Ctrl+k exec "keepassxc ~/.keepass/Passwords.kdbx"
+
+bindsym $mod+Shift+x exec "xkill"
+
+# Flameshot for screenshots
+bindsym Print exec --no-startup-id flameshot gui
+
+# Start calculator on calculator key
+bindsym XF86Calculator exec "gnome-calculator"
 
 # floating windows support
 floating_modifier Mod1
@@ -215,15 +231,9 @@ floating_maximum_size -1 x -1
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 for_window [class="Yad"] floating enable
-
-# i3-gaps
-for_window [class=".*"] border pixel 2 #*
-gaps inner 10
-gaps outer 1
-# Only enable gaps on a workspace when there is at least one container
-smart_gaps on
-# Only enable outer gaps when there is exactly one container
-smart_gaps inverse_outer
+for_window [class="Pycalendar.py"] floating enable 
+for_window [class="Pycalendar.py"] move 400 415
+for_window [class="SimpleScreenRecorder"] floating enable
 
 # assigning apps to specific workspaces
 assign [class="Opera" instance="Opera"] → $ws1
@@ -231,6 +241,10 @@ assign [class="Code" instance="code"] → $ws2
 assign [class="Insomnia" instance="insomnia"] → $ws3
 assign [class="Genymotion" instance="genymotion"] → $ws3
 assign [class="DBeaver"] → $ws3
+assign [title="DBeaver"] → $ws3
+assign [class="Gimp"] → $ws3
+assign [class="Anydesk"] → $ws3
+assign [class="Postman"] → $ws3
 assign [class="discord" instance="discord"] → $ws4
 for_window [class="Spotify"] move to workspace $ws5
 for_window [class="Stremio"] move to workspace $ws5
@@ -241,7 +255,8 @@ assign [class="deadcells"] → $ws6
 assign [class="riotclientux.exe"] → $ws6
 assign [class="leagueclient.exe"] → $ws6
 assign [class="leagueclientux.exe"] → $ws6
-assign [class="keepassxc" instance="keepassxc"] → $ws10
+assign [class="battle.net.exe"] → $ws6
+assign [class="KeePassXC"] → $ws10
 
 # enabling floating windows for Steam
 # https://github.com/ValveSoftware/steam-for-linux/issues/1040
@@ -258,31 +273,56 @@ for_window [title="^Steam Keyboard$"] floating enable
 
 # floating windows for other apps
 for_window [class="Gpicview"] floating enable
-for_window [class="Gnome-calculator"] floating enable
+for_window [class="gnome-calculator"] floating enable
+
+### end window manual configuration
+
+### Window themes
+
+# i3-gaps
+for_window [class=".*"] border pixel 2 #*
+gaps inner 8
+gaps outer 1
+# Only enable gaps on a workspace when there is at least one container
+smart_gaps on
+# Only enable outer gaps when there is exactly one container
+smart_gaps inverse_outer
+
+## Border colors
+
+# class                 border  backgr. text    indicator child_border
+client.focused          #9e32a8 #9e32a8 #ffffff #9e32a8   #9e32a8
+
+## end border colors
 
 # font for window titles
-font pango:Source Sans Pro 12
+font pango:Fira Code 12px
 
-# bind my i3-scrot to print key
-#bindsym --release $mod+Print exec "i3-scrot -scs"
-#bindsym --release Print exec "i3-scrot -sc"
+### end window themes
 
-# Flameshot for screenshots
-bindsym Print exec --no-startup-id flameshot gui
+### startup applications
 
-# Start calculator on calculator key
-bindsym XF86Calculator exec "gnome-calculator"
+# start rofi (a program launcher)
+#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --entry-type=name --dmenu='rofi -i -opacity \"90\" -dmenu -p "run:"'
 
-# startup applications
 exec --no-startup-id i3-msg 'exec opera'
 exec --no-startup-id i3-msg 'workspace $ws2; exec i3-sensible-terminal'
 exec --no-startup-id i3-msg 'exec discord'
 exec --no-startup-id i3-msg 'exec keepassxc'
-exec --no-startup-id redshift-gtk
+# exec --no-startup-id redshift-gtk
 exec --no-startup-id flameshot
 #exec --no-startup-id "i3-battery-popup -n -L 20 -t 10"
-exec --no-startup-id "compton --config ~/.config/compton/config -b"
+exec_always --no-startup-id ~/.config/compton/launch.sh 
 exec "setxkbmap -layout br"
 exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec --no-startup-id nitrogen --restore 
+exec_always --no-startup-id disable-standby-fs | tee /dev/tty
+# exec_always --no-startup-id 'init-second-monitor > /tmp/init-2nd-monitor.log 2> /tmp/init-2nd-monitor.log'
 
+# Enable tapping on touchpad
+exec_always --no-startup-id 'xinput set-prop "MSFT0001:00 06CB:CE2D Touchpad" "libinput Tapping Enabled" 1'
 
+# Disable screen saver
+exec_always --no-startup-id 'xset s off'
+
+### end startup applications

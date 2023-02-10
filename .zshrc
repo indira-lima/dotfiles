@@ -144,6 +144,8 @@ export PATH="$PATH:$CODE_HOME/linux-utils:$CODE_HOME/i3-battery-popup"
 export TMUX_SESSION_NAME="default"
 export TMUX_WINDOW_NAME="work"
 export PATH="$PATH:/usr/local/go/bin"
+export PATH="$PATH:/opt/Postman"
+export PATH="$PATH:/opt/apache-maven-3.8.6/bin"
 export PATH="$PATH:/home/schuster/.nvim/bin"
 export XDG_CONFIG_HOME="$HOME/.config"
 
