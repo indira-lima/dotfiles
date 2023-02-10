@@ -144,12 +144,13 @@ export PATH="$PATH:$CODE_HOME/linux-utils:$CODE_HOME/i3-battery-popup"
 export TMUX_SESSION_NAME="default"
 export TMUX_WINDOW_NAME="work"
 export PATH="$PATH:/usr/local/go/bin"
-
-alias cdng='cd ~/code/quaestum/nagumo'
-alias cdqs='cd ~/code/quaestum'
+export PATH="$PATH:/home/schuster/.nvim/bin"
+export XDG_CONFIG_HOME="$HOME/.config"
 
 source ~/code/linux-utils/commands.sh
+export TERM='screen-256color'
 export TERMINAL='gnome-terminal'
 export EDITOR=nvim
 export PATH="$PATH:/opt/genymobile/genymotion"
 export PATH=$PATH:/home/schuster/.spicetify
+export MYVIMRC='~/.config/nvim/init.vim'
