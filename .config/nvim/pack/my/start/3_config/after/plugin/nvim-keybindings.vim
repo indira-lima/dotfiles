@@ -43,12 +43,6 @@ nnoremap <silent> <leader>qq :q<CR>
 " Write file
 nnoremap <silent> <leader>w :w<CR>
 
-" Write file to git
-nnoremap <silent> <leader>gw :Gwrite<CR>
-
-" Show git status
-nnoremap <silent> <leader>gs :Git<CR>
-
 " Copy selection to clipboard
 vnoremap <silent> <leader>cc "+y
 
