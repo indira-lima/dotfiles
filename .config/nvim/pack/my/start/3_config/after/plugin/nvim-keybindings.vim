@@ -4,11 +4,11 @@
 " Select entire buffer
 nnoremap <silent> <leader>a ggVG
 
-" Shortcut to edit THIS configuration file: (e)dit (c)onfiguration
+" Shortcut to edit the init.vim configuration file: (e)dit (c)onfiguration
 nnoremap <silent> <leader>ec :e $MYVIMRC<CR>
 
-" Shortcut to source (reload) THIS configuration file after editing it: (s)ource (c)onfiguraiton
-nnoremap <silent> <leader>sc :source $MYVIMRC<CR>
+" Shortcut to source (reload) the current configuration file after editing it: (s)ource (c)onfiguraiton
+nnoremap <silent> <leader>sc :echo expand("%:p") \| source<CR>
 
 " toggle line numbers
 nnoremap <silent> <leader>n :set number! number?<CR>
@@ -28,7 +28,7 @@ nnoremap <silent> <leader>bv :vnew<CR>
 " Undo hunk (Git Gutter)
 nnoremap <silent> <leader>uh :GitGutterUndoHunk<CR>
 
-" Back cursos to previous location
+" Back cursor to previous location
 nnoremap <silent> <leader>bc ``
 
 " improved keyboard navigation
