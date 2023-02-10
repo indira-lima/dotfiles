@@ -1,5 +1,9 @@
 """" CoC - Conquer of Completion
 
+if !g:enablenvim
+	finish
+endif
+
 " NOTE: When reinstalling also run:
 "   rm ~/.config/coc/ -rf
 

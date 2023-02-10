@@ -8,7 +8,7 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "" Environment configuration
-let enablenvim=1
+let g:enablenvim=1
 
 " Configura o caminho de busca de arquivos de script do Neovim
 " A sintaxe .,, significa que o Neovim primeiro procurará arquivos

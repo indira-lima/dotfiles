@@ -1,3 +1,8 @@
+if !g:enablenvim
+	finish
+endif
+
+" Open a fully synced markdown preview in the browser
 call PackAdd('iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install'})
 
 nmap <leader>mp <Plug>MarkdownPreview
