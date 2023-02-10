@@ -42,22 +42,62 @@ export default $1;
 endsnippet
 
 snippet us "useState snippet" b
-const [$1, set${1/\w+\s*/\u$0/}] = useState<$2>($3);
+	const [$1, set${1/\w+\s*/\u$0/}] = useState<$2>($3);
 $4
 endsnippet
 
 snippet ue "useEffect snippet" b
-useEffect(($1) => {
-	$2
+	useEffect(($1) => {
+		$2
 
-	return () => {}
-}, [$3]);
+		return () => {}
+	}, [$3]);
 $4
 endsnippet
 
 snippet um "useMemo snippet" b
-const $1 = useMemo(() => {
-	return $2
-}, [$3])
+	const $1 = useMemo<$2>(() => {
+		return $3
+	}, [$4])
+$5
+endsnippet
+
+snippet ur "useRef snippet" b
+	const $1 = useRef<$2>($3);
 $4
+endsnippet
+
+snippet uc "useCallback snippet" b
+	const $1 = useCallback(() => {
+		$2
+	}, [$3])
+$4
+endsnippet
+
+snippet tsig "Add a @ts-ignore commentary"
+// @ts-ignore
+endsnippet
+
+snippet Tsig "Add a @ts-ignore commentary"
+{/* @ts-ignore */}
+endsnippet
+
+snippet unav "useNavigation snippet" b
+	const navigation = useNavigation();
+endsnippet
+
+snippet uisfoc "useIsFocused snippet" b
+	const isFocused = useIsFocused();
+endsnippet
+
+snippet urou "useRoute snippet" b
+	const route = useRoute();
+endsnippet
+
+snippet log "console.log" 
+console.log($1);
+endsnippet
+
+snippet jsxc "JSX Comentary block" b
+{/* $1 */}
 endsnippet
