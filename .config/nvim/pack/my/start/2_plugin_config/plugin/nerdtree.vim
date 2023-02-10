@@ -1,28 +1,31 @@
+" File explorer
 PackAdd preservim/nerdtree
 
-" Toggle NERDTree
-nmap <c-n> :NERDTreeToggleVCS<cr>	
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Open current file in NERDTree
-nmap <c-m> :NERDTreeFind<cr>
+" Nice to remember (hard to find in the docs):
+"
+" U: go up a dir
+" Cc: go down a dir
 
-""" Open current buffer in NERDTree
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Check if NERDTree is open or active
-function! IsNERDTreeOpen()        
-  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+" Toggle NERDTree if already open, or highlight current file
+function! NERDTreeToggleOrFind()
+	" Toggle NERDTree if current buffer doesn't have a existing file or if its a Nerdtree instance
+	if !filereadable(expand('%:p')) || &filetype == 'nerdtree'
+		:NERDTreeToggle
+	else
+		:NERDTreeFind
+	endif
 endfunction
 
-" Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
-" file, and we're not in vimdiff
-function! SyncTree()
-  if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
-    NERDTreeFind
-    wincmd p
-  endif
-endfunction
+nmap <C-n> :call NERDTreeToggleOrFind()<cr>	
 
-" Highlight currently open buffer in NERDTree
-" autocmd BufEnter * call SyncTree()
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""" END OF open current buffer in NERDTree
+" If another buffer tries to replace NERDTree, put it in the other window, and bring back NERDTree.
+autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_tree_\d\+' && winnr('$') > 1 |
+    \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+
+
