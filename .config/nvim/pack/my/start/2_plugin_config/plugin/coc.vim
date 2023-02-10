@@ -47,6 +47,9 @@ call coc#add_extension('coc-phpls')
 
 """" Coc configuration
 
+" Use <c-space> in insert mode to trigger completion
+inoremap <silent><expr> <c-space> coc#refresh()
+
 " Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
@@ -121,12 +124,14 @@ augroup mygroup
 augroup end
 
 " Remap keys for applying codeAction to the current buffer.
-" nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader>ac  <Plug>(coc-codeaction)
+xmap <leader>ac  <Plug>(coc-codeaction-selected)
+
 " Apply QuickFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Run the Code Lens action on the current line.
-nmap <leader>cl  <Plug>(coc-codelens-action)
+" nmap <leader>cl  <Plug>(coc-codelens-action)
 
 " Remap <C-f> and <C-b> for scroll float windows/popups.
 if has('nvim-0.4.0') || has('patch-8.2.0750')
