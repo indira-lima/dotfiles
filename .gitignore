@@ -5,5 +5,9 @@
 **/pack/minpac
 **/Session.vim
 **/.undodir
-**/BetterDiscord/plugins
 cbonsai/progress
+
+BetterDiscord/plugins/*.data.json
+BetterDiscord/plugins/*.plugin.js
+BetterDiscord/plugins/*.css
+BetterDiscord/data/
