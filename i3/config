@@ -124,7 +124,6 @@ bindsym $mod+5 workspace $ws5
 bindsym $mod+6 workspace number $ws6
 bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
-bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 
 # switch to workspace, using numpad keys
@@ -277,7 +276,7 @@ smart_gaps inverse_outer
 ## Border colors
 
 # class                 border  backgr. text    indicator child_border
-client.focused          #9e32a8 #9e32a8 #ffffff #9e32a8   #9e32a8
+client.focused          #00000000 #00000000 #ffffff #00000000 #00000000
 
 ## end border colors
 
@@ -291,17 +290,19 @@ font pango:Fira Code 12px
 # start rofi (a program launcher)
 #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --entry-type=name --dmenu='rofi -i -opacity \"90\" -dmenu -p "run:"'
 
+# set keyboard layout
+exec "setxkbmap -layout br"
+
 exec --no-startup-id i3-msg 'exec opera'
 exec --no-startup-id i3-msg 'workspace $ws2; exec i3-sensible-terminal'
 exec --no-startup-id i3-msg 'exec discord'
 exec --no-startup-id i3-msg 'exec keepassxc'
 # exec --no-startup-id redshift-gtk
 exec --no-startup-id flameshot
-#exec --no-startup-id "i3-battery-popup -n -L 20 -t 10"
-exec_always --no-startup-id ~/.config/compton/launch.sh 
-exec "setxkbmap -layout br"
+exec --no-startup-id nitrogen --restore
+
+exec_always --no-startup-id ~/.config/picom/launch.sh
 exec_always --no-startup-id ~/.config/polybar/launch.sh
-exec --no-startup-id nitrogen --restore 
 exec_always --no-startup-id disable-standby-fs | tee /dev/tty
 # exec_always --no-startup-id 'init-second-monitor > /tmp/init-2nd-monitor.log 2> /tmp/init-2nd-monitor.log'
 
@@ -319,6 +320,6 @@ bindsym $mod+b exec ~/.config/cbonsai/open_or_launch.sh
 assign [class="Bonsai"] → $wsBonsai
 for_window [class="Bonsai"] floating enable 
 for_window [class="Bonsai"] border pixel 0
-for_window [class="Bonsai"] resize set 640 480
+for_window [class="Bonsai"] resize set 1280 960
 for_window [class="Bonsai"] move position center
 exec_always --no-startup-id ~/.config/cbonsai/launch.sh
