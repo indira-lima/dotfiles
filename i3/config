@@ -116,15 +116,15 @@ set $ws8 "8"
 set $ws10 "10"
 
 # switch to workspace
-bindsym $mod+1 workspace $ws1
-bindsym $mod+2 workspace $ws2
-bindsym $mod+3 workspace $ws3
-bindsym $mod+4 workspace $ws4
-bindsym $mod+5 workspace $ws5
-bindsym $mod+6 workspace number $ws6
-bindsym $mod+7 workspace number $ws7
-bindsym $mod+8 workspace number $ws8
-bindsym $mod+0 workspace number $ws10
+bindsym $mod+1 exec ~/.config/i3/go_to_workspace.sh $ws1
+bindsym $mod+2 exec ~/.config/i3/go_to_workspace.sh $ws2
+bindsym $mod+3 exec ~/.config/i3/go_to_workspace.sh $ws3
+bindsym $mod+4 exec ~/.config/i3/go_to_workspace.sh $ws4
+bindsym $mod+5 exec ~/.config/i3/go_to_workspace.sh $ws5
+bindsym $mod+6 exec ~/.config/i3/go_to_workspace.sh $ws6
+bindsym $mod+7 exec ~/.config/i3/go_to_workspace.sh $ws7
+bindsym $mod+8 exec ~/.config/i3/go_to_workspace.sh $ws8
+bindsym $mod+0 exec ~/.config/i3/go_to_workspace.sh $ws10
 
 # switch to workspace, using numpad keys
 bindsym $mod+mod2+KP_1 workspace $ws1
@@ -136,6 +136,8 @@ bindsym $mod+mod2+KP_6 workspace number $ws6
 bindsym $mod+mod2+KP_7 workspace number $ws7
 bindsym $mod+mod2+KP_8 workspace number $ws8
 bindsym $mod+mod2+KP_0 workspace number $ws10
+
+for_window [class="feh"] floating enable, sticky enable, border pixel 0, move absolute position 0 px 0 px
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
