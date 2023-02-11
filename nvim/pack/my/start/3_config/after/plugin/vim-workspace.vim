@@ -5,6 +5,8 @@ PackAdd thaerkh/vim-workspace
 " Do not save sections without asking to
 let g:workspace_autocreate = 0
 
+" Disable autosave
+let g:workspace_autosave = 0
 
 " Function to work around the problem of vim-workspace
 " having trouble loading NERDTree buffers, which would
