@@ -116,15 +116,15 @@ set $ws8 "8"
 set $ws10 "10"
 
 # switch to workspace
-bindsym $mod+1 exec ~/.config/i3/go_to_workspace.sh $ws1
-bindsym $mod+2 exec ~/.config/i3/go_to_workspace.sh $ws2
-bindsym $mod+3 exec ~/.config/i3/go_to_workspace.sh $ws3
-bindsym $mod+4 exec ~/.config/i3/go_to_workspace.sh $ws4
-bindsym $mod+5 exec ~/.config/i3/go_to_workspace.sh $ws5
-bindsym $mod+6 exec ~/.config/i3/go_to_workspace.sh $ws6
-bindsym $mod+7 exec ~/.config/i3/go_to_workspace.sh $ws7
-bindsym $mod+8 exec ~/.config/i3/go_to_workspace.sh $ws8
-bindsym $mod+0 exec ~/.config/i3/go_to_workspace.sh $ws10
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+0 workspace $ws10
 
 # switch to workspace, using numpad keys
 bindsym $mod+mod2+KP_1 workspace $ws1
