@@ -11,3 +11,7 @@ BetterDiscord/plugins/*.data.json
 BetterDiscord/plugins/*.plugin.js
 BetterDiscord/plugins/*.css
 BetterDiscord/data/
+
+spicetify/Backup/
+spicetify/CustomApps/
+spicetify/Extracted/
