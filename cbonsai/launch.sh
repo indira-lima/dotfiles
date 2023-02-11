@@ -1,5 +1,9 @@
 #!/usr/bin/bash
 
+# My digital bonsai, made with 💚 and ☕
+#
+# @author: Dahan Schuster
+
 CBONSAI_DIR="$HOME/.config/cbonsai"
 PROGRESS_FILE="$CBONSAI_DIR/progress"
 
