@@ -36,8 +36,8 @@ bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOU
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+# start a terminal witth cntrl enter
+bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -296,7 +296,7 @@ font pango:Fira Code 12px
 exec "setxkbmap -layout br"
 
 exec --no-startup-id i3-msg 'exec opera'
-exec --no-startup-id i3-msg 'workspace $ws2; exec i3-sensible-terminal'
+exec --no-startup-id i3-msg 'workspace $ws2; exec kitty
 exec --no-startup-id i3-msg 'exec discord'
 exec --no-startup-id i3-msg 'exec keepassxc'
 # exec --no-startup-id redshift-gtk
