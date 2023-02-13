@@ -15,3 +15,5 @@ BetterDiscord/data/
 spicetify/Backup/
 spicetify/CustomApps/
 spicetify/Extracted/
+
+albert/*.db
