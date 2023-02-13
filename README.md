@@ -10,22 +10,23 @@ is the roadmap
 
 ## dotfiles
 	- i3wm
-		- [x] keybindings
+		- [x] key bindings
 		- [x] startup apps
-		- [x] resize shortcuts
 		- [x] workspaces
 		- [x] i3wm v4.22 (merged with i3-gaps)
-	- terminal (alactritty, kitty)
-		- [x] terminal emulator: kitty, don't need tmux anymore
-	- status bar (polybar)
+	- terminal emulator
+		- [x] kitty, don't need tmux anymore
+		- [x] color scheme
+		- [x] key bindings
+	- status bar
+		- [x] polybar
 		- [x] color scheme
 		- [x] calendar
 		- [x] music
-		- [x] transparent background
+		- [x] background with shades of color
 		- [x] rounded corners
-	- dmenu (rofi)
-		- [ ] color scheme
-		- [ ] icons
+	- Launcher
+		- [x] Albert launcher
 	- window compositor (picom)
 		- [x] basic config
 		- [x] animations
@@ -34,5 +35,13 @@ is the roadmap
 		- [x] NeoVim
 		- [x] Separate config in files using vim's directory system (start, after, plugin etc)
 		- [x] Code completion plugin (CoC)
-		- [x] Better key bindings
+		- [x] nvim key bindings (leader key)
 		- [x] Code snippets (UltiSnippets)
+		- [x] tab management
+		- [ ] plugin for better tabs
+	- Wallpaper	
+		- [x] nitrogen
+	- Notifications
+		- [x] dunst
+		- [ ] layout
+		- [ ] color schemes by sender (spotify, opera, wifi)
