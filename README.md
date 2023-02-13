@@ -20,7 +20,7 @@ is the roadmap
 	- status bar (polybar)
 		- [x] color scheme
 		- [x] calendar
-		- [ ] music
+		- [x] music
 		- [x] transparent background
 		- [x] rounded corners
 	- dmenu (rofi)
