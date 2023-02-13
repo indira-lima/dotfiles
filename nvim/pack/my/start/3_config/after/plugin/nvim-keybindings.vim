@@ -46,3 +46,16 @@ nnoremap <silent> <leader>w :w<CR>
 " Copy selection to clipboard
 vnoremap <silent> <leader>cc "+y
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""" Tab management
+
+" new tab
+nnoremap <silent> <leader>t :tabnew<CR>
+" move tab left
+nnoremap <silent> <leader>{ :tabmove -1<CR>
+" move tab right
+nnoremap <silent> <leader>} :tabmove +1<CR>
+" go to previous tab
+nnoremap <silent> <leader>[ gT
+" go to next tab
+nnoremap <silent> <leader>] gt
