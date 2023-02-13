@@ -48,5 +48,5 @@ function! MySaveWorkspace(quit_after)
 	endif
 endfunction
 
-# Map the function to <leader>ss ([s]ave [s]ession)
+" Map the function to <leader>ss ([s]ave [s]ession)
 nnoremap <leader>ss :call MySaveWorkspace(1)<CR>
