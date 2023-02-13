@@ -13,10 +13,23 @@ let g:workspace_autosave = 0
 " require to remember closing all NERDTree buffers
 " before quitting the session
 "
+" This function checks if there's any NERDTree buffers open,
+" closes them, and then saves the workspce and writes to all
+" buffers. If quit_after is set to 1, quits all buffers too
+"
 " AUTHOR: Dahan Schuster
 function! MySaveWorkspace(quit_after)
 	if HasNERDTreeBuffer()
-		NERDTreeClose
+		# save the current tab position, because :tabdo
+		# leaves the last tab opened
+		let s:currentTab = tabpagenr()	
+
+		# use :tabdo to run NERDTreeClose in all tabs
+		tabdo NERDTreeClose
+
+		# use {count}gt to go to tab {count}
+		# @see :help gt
+		execute s:currentTab . "gt"
 	endif
 
 	CloseHiddenBuffers
@@ -35,4 +48,5 @@ function! MySaveWorkspace(quit_after)
 	endif
 endfunction
 
+# Map the function to <leader>ss ([s]ave [s]ession)
 nnoremap <leader>ss :call MySaveWorkspace(1)<CR>
