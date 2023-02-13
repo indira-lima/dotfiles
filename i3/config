@@ -315,6 +315,8 @@ exec_always --no-startup-id ~/.config/picom/launch.sh
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 # Launcher: Albert Launcher
 exec_always --no-startup-id albert&
+# Notification Daemon: Dunst
+exec_always --no-startup-id dunst -conf ~/.config/dunst/dunstrc.conf &
 
 exec_always --no-startup-id disable-standby-fs | tee /dev/tty
 
