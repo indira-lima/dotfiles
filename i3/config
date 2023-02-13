@@ -289,34 +289,44 @@ font pango:Fira Code 12px
 
 ### end window themes
 
-### startup applications
-
-# Albert Launcher
-exec_always --no-startup-id albert
+### startup commands
 
 # set keyboard layout
 exec "setxkbmap -layout br"
 
+# launch GUI applications
 exec --no-startup-id i3-msg 'exec opera'
-exec --no-startup-id i3-msg 'workspace $ws2; exec kitty
 exec --no-startup-id i3-msg 'exec discord'
 exec --no-startup-id i3-msg 'exec keepassxc'
-# exec --no-startup-id redshift-gtk
-exec --no-startup-id flameshot
-exec --no-startup-id nitrogen --restore
 
+# switch to ws2 and launch terminal
+exec --no-startup-id i3-msg 'workspace $ws2; exec kitty'
+
+# TODO: fix redshift!
+# exec --no-startup-id redshift-gtk
+
+# Screenshot: flameshot
+exec --no-startup-id flameshot&
+# Wallpapers: nitrogen
+exec --no-startup-id nitrogen --restore
+# Window Compositor: picom
 exec_always --no-startup-id ~/.config/picom/launch.sh
+# Dock: Polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh
+# Launcher: Albert Launcher
+exec_always --no-startup-id albert&
+
 exec_always --no-startup-id disable-standby-fs | tee /dev/tty
+
 # exec_always --no-startup-id 'init-second-monitor > /tmp/init-2nd-monitor.log 2> /tmp/init-2nd-monitor.log'
 
 # Enable tapping on touchpad
 exec_always --no-startup-id exec ~/.config/i3/init_xinput.sh
 
 # Disable screen saver
-exec_always --no-startup-id 'xset s off'
+exec_always --no-startup-id i3-msg 'exec xset s off'
 
-### end startup applications
+### end startup commands
 
 # My bonsai workspace
 set $wsBonsai "9"
