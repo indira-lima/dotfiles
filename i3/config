@@ -311,7 +311,7 @@ exec_always --no-startup-id disable-standby-fs | tee /dev/tty
 # exec_always --no-startup-id 'init-second-monitor > /tmp/init-2nd-monitor.log 2> /tmp/init-2nd-monitor.log'
 
 # Enable tapping on touchpad
-exec_always --no-startup-id 'xinput set-prop "MSFT0001:00 06CB:CE2D Touchpad" "libinput Tapping Enabled" 1'
+exec_always --no-startup-id exec ~/.config/i3/init_xinput.sh
 
 # Disable screen saver
 exec_always --no-startup-id 'xset s off'
