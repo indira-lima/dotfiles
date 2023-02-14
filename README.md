@@ -9,11 +9,12 @@ is the roadmap
 	- [ ] Add a README.md with screenshots
 
 ## dotfiles
-	- i3wm
+	- Window manager
+		- [x] i3wm v4.22 (merged with i3-gaps)
+		- [ ] Sway?
 		- [x] key bindings
 		- [x] startup apps
 		- [x] workspaces
-		- [x] i3wm v4.22 (merged with i3-gaps)
 	- terminal emulator
 		- [x] kitty, don't need tmux anymore
 		- [x] color scheme
@@ -45,3 +46,5 @@ is the roadmap
 		- [x] dunst
 		- [ ] layout
 		- [ ] color schemes by sender (spotify, opera, wifi)
+	- Dijo habit tracker
+		- [ ] find out more about it
