@@ -12,8 +12,8 @@ cbonsai \
 	--load $PROGRESS_FILE \
 	--live --infinite \
 	--multiplier=15 \
-	--wait=120 --time=1 \
-	--life=100 \
+	--wait=120 --time=2 \
+	--life=60 \
 	--base=1 \
 	--leaf="&,@,#,e,n,b,y" \
 	--seed 42
