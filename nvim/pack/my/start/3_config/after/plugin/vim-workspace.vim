@@ -20,27 +20,32 @@ let g:workspace_autosave = 0
 " AUTHOR: Dahan Schuster
 function! MySaveWorkspace(quit_after)
 	if HasNERDTreeBuffer()
-		# save the current tab position, because :tabdo
-		# leaves the last tab opened
+		" saves the current tab position, because :tabdo
+		" leaves the last tab opened
 		let s:currentTab = tabpagenr()	
 
-		# use :tabdo to run NERDTreeClose in all tabs
+		" uses :tabdo to run NERDTreeClose in all tabs
 		tabdo NERDTreeClose
 
-		# use {count}gt to go to tab {count}
-		# @see :help gt
-		execute s:currentTab . "gt"
+		" uses :execute and :normal to run {count}gt
+		" this switches to tab at position {count}
+		"
+		" @see :help execute
+		" @see :help normal
+		" @see :help gt
+		execute "normal! " . s:currentTab . "gt"
 	endif
 
+	" closes all unactive buffers (vim-workspace command)
 	CloseHiddenBuffers
 
-	" this requires the addition of a line in the end of the
-	" pack/minpac/opt/vim-workspace/plugin/workspace.vim file
-	" to add the MakeWorkspace command:
-  " `command! MakeWorkspace call s:MakeWorkspace(1)`
+	" Creates the Session.vim file that will save the current vim state.
+	" This requires the addition of a line in the end of the
+	" pack/minpac/opt/vim-workspace/plugin/workspace.vim file to add the
+	" MakeWorkspace command: `command! MakeWorkspace call s:MakeWorkspace(1)`
 	MakeWorkspace
 
-	" make sure we don't lose anything
+	" making sure we don't lose anything
 	wall
 
 	if a:quit_after
