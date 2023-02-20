@@ -25,6 +25,9 @@ nnoremap <silent> <leader>bh :new<CR>
 " vertical split with new buffer
 nnoremap <silent> <leader>bv :vnew<CR>
 
+" open a terminal in a horizontal buffer
+nnoremap <silent> <leader>bt :call OpenTerminalHorizontal()<CR>
+
 " Undo hunk (Git Gutter)
 nnoremap <silent> <leader>uh :GitGutterUndoHunk<CR>
 
