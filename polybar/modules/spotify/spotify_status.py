@@ -108,7 +108,7 @@ try:
     song = fix_string(metadata['xesam:title']) if metadata['xesam:title'] else ''
 
     if not artist and not song:
-        print('')
+        print('Music stopped')
     else:
         if len(song) > trunclen:
             song = song[0:trunclen]
@@ -124,6 +124,6 @@ try:
 
 except Exception as e:
     if isinstance(e, dbus.exceptions.DBusException):
-        print('')
+        print('Offline')
     else:
         print(e)

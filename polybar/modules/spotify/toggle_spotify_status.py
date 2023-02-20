@@ -6,6 +6,8 @@
 # @author: Dahan Schuster
 
 import dbus
+import subprocess
+import i3ipc
 
 try:
     session_bus = dbus.SessionBus()
@@ -22,4 +24,11 @@ try:
         spotify_interface.Play()
     
 except Exception as e:
-    print("error trying to play/pause spotify", e)
+    """ spotify service is propably down """
+    # Connect to i3
+    i3 = i3ipc.Connection()
+    # Switch to spotify workspace
+    i3.command('workspace 5')
+    # open spotify
+    subprocess.call(["spotify"])
+
