@@ -1,0 +1,38 @@
+snippet ds "Debug Style" 
+borderWidth: ${1:1},$2borderColor: ${3:'red'},
+endsnippet
+
+snippet rh "React Hook" b
+import { useCallback } from "react";
+
+interface ${1/^(...)(.*)/\u$2/}Props {
+	callback: () => void;
+}
+
+/**
+ * ${2:$1}
+ */
+const ${1:`!p snip.rv = snip.basename`} = ($3): ${1/^(...)(.*)/\u$2/}Props => {
+
+	const callback = useCallback(() => {
+		// TODO: custom hook callback
+	}, []);
+
+	return {
+		callback	
+	};
+};
+
+export default $1;
+
+endsnippet
+
+snippet rnss "React Native StyleSheet" b
+import { StyleSheet } from "react-native";
+
+const styles = StyleSheet.create({
+	$1,
+});
+
+export default styles;
+endsnippet
