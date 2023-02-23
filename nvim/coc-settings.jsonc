@@ -2,6 +2,7 @@
 	"typescript.updateImportsOnFileMove.enable": true,
 	"pyright.enable": false,
 	"python.formatting.autopep8Path": "~/.local/bin/autopep8",
+  "snippets.ultisnips.pythonPrompt": false,
 	"languageserver": {
 		"vimls": {
 			"module": "~/.nvm/versions/node/v16.17.1/bin/vim-language-server",
