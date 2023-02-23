@@ -1,3 +1,6 @@
+" currently deactivated in favor of nvim-tree
+finish
+
 " File explorer
 PackAdd preservim/nerdtree
 

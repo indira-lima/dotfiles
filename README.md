@@ -39,7 +39,7 @@ is the roadmap
 		- [x] nvim key bindings (leader key)
 		- [x] Code snippets (UltiSnippets)
 		- [x] tab management
-		- [ ] plugin for better tabs
+		- [x] plugin for better tabs
 	- Wallpaper	
 		- [x] nitrogen
 	- Notifications
