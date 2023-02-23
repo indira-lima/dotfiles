@@ -27,7 +27,10 @@ function! MySaveWorkspace(quit_after)
 	endif
 
 	" closes all unactive buffers (vim-workspace command)
-	CloseHiddenBuffers
+	" 
+	" NOTE: after using babar.nvim, closing hidden buffers
+	" is not a good thing anymore
+	" CloseHiddenBuffers
 
 	" Creates the Session.vim file that will save the current vim state.
 	" This requires the addition of a line in the end of the

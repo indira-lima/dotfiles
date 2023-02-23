@@ -29,6 +29,3 @@ xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 " turn off search highlighting with <CR> (carriage-return)
 nnoremap <CR> :nohlsearch<CR><CR>
 
-" Exit terminal mode with ESC
-tnoremap <Esc> <C-\><C-n>
-

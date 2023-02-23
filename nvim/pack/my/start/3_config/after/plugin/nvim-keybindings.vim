@@ -40,9 +40,6 @@ nnoremap <leader>j <C-w>j
 nnoremap <leader>k <C-w>k
 nnoremap <leader>l <C-w>l
 
-" Quite buffer
-nnoremap <silent> <leader>qq :q<CR>
-
 " Write file
 nnoremap <silent> <leader>w :w<CR>
 
@@ -50,15 +47,3 @@ nnoremap <silent> <leader>w :w<CR>
 vnoremap <silent> <leader>cc "+y
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""
-""" Tab management
-
-" new tab
-nnoremap <silent> <leader>t :tabnew<CR>
-" move tab left
-nnoremap <silent> <leader>{ :tabmove -1<CR>
-" move tab right
-nnoremap <silent> <leader>} :tabmove +1<CR>
-" go to previous tab
-nnoremap <silent> <leader>[ gT
-" go to next tab
-nnoremap <silent> <leader>] gt
