@@ -4,6 +4,8 @@
 function! OpenTerminalHorizontal()
 	new
 	terminal
+	set nonumber
+	set norelativenumber
 	normal i
 endfunction
 
