@@ -8,7 +8,7 @@ nnoremap <silent> <leader>a ggVG
 nnoremap <silent> <leader>ec :e $MYVIMRC<CR>
 
 " Shortcut to source (reload) the current configuration file after editing it: (s)ource (c)onfiguraiton
-nnoremap <silent> <leader>sc :echo expand("%:p") \| source<CR>
+nnoremap <silent> <leader>sc :call SourceIfIsVimFile()<CR>
 
 " toggle line numbers
 nnoremap <silent> <leader>n :set number! number?<CR>
