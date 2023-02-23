@@ -7,6 +7,7 @@
 #  - Move the feh window $STEP pixels at time trough the X axis, until it's no longer visible
 #  - Kill the feh window
 #
+# Supports passing just "next" or "prev" as argument
 #	It ain't much, but it's honest work
 #
 # @author: Dahan Schuster
@@ -14,14 +15,8 @@
 # get the target workspace from arguments
 WORKSPACE=$1
 
-# get current workspace using xprop
-# the window manager must set the _NET_CURRENT_DESKTOP variable
-# i3wm only does that since v4.22
-WKSP=`xprop -root -notype  _NET_CURRENT_DESKTOP | sed 's#.* =##'`
-
-# add 1 to the value to align with my i3wm workspace numbers, which
-# have a 1-based index, while xprop uses a 0-based one
-CURRENT_WORKSPACE=`expr 1 + $WKSP`
+# get current workspace using i3-msg
+CURRENT_WORKSPACE=$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true) | .num')
 
 # workspace screenshot name
 PRTSRC=".ws-screenshot.jpeg"
@@ -42,6 +37,20 @@ LEFT=-1
 WIN_H=1080
 WIN_W=1920
 
+# "next" moves to the workspace at right
+if [[ "$WORKSPACE" == "next" ]]; then
+	WORKSPACE=`expr $CURRENT_WORKSPACE + 1`
+
+	# if we reached to the rightmost workspace, go back to the first one
+	[ $WORKSPACE -gt 10 ] && WORKSPACE=1
+# "prev" moves to the workspace at left
+elif [[ "$WORKSPACE" == "prev" ]]; then
+	WORKSPACE=`expr $CURRENT_WORKSPACE - 1`
+	
+	# if we reached to the leftmost workspace, go back to the last one
+	[ $WORKSPACE -lt 1 ] && WORKSPACE=10
+fi
+
 # if target workspace is not the current one
 if [ $CURRENT_WORKSPACE -ne $WORKSPACE ]; then
 	# take a screenshot of the workspace
@@ -55,7 +64,7 @@ if [ $CURRENT_WORKSPACE -ne $WORKSPACE ]; then
 	# change workspace
 	i3-msg workspace $WORKSPACE
 	# give the window manager time to change ws
-	sleep .2
+	sleep .1
 else
 	# if we already are at the workspace, that's no need to move
 	exit
