@@ -1,8 +1,8 @@
 {
 	"all": {
 		"changeLogs": {
-			"BDFDB": "3.0.7",
-			"PluginRepo": "2.4.5"
+			"BDFDB": "3.0.8",
+			"PluginRepo": "2.4.6"
 		},
 		"choices": {
 			"toastPosition": "right"
@@ -14,8 +14,8 @@
 			"useChromium": false
 		},
 		"hashes": {
-			"0BDFDB.data.json": "05d61fe50fa9df357b274a55feb4d7d0e35056f6",
-			"0BDFDB.raw.css": "a1c4a8b6f28c4765c6af2853ddf13a35922a2b9e"
+			"0BDFDB.data.json": "939d5545af24ad41aba0e9a579a0b84b2c1f1f1c",
+			"0BDFDB.raw.css": "f52cb738c62f9d43592643771b39e0783b93ff1b"
 		}
 	}
 }
