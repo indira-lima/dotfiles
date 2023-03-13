@@ -80,7 +80,7 @@ let bufferline.diagnostics = [
 
 " Excludes buffers from the tabline
 let bufferline.exclude_ft = ['fugitive']
-let bufferline.exclude_name = []
+let bufferline.exclude_name = ['/usr/bin/zsh']
 
 " Hide inactive buffers and file extensions. Other options are `alternate`, `current`, and `visible`.
 " let bufferline.hide = {'extensions': v:true, 'inactive': v:true}
