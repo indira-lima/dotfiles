@@ -1,29 +1,16 @@
 " Function to work around the problem of vim-workspace
-" having trouble loading NERDTree buffers, which would
-" require to remember closing all NERDTree buffers
+" having trouble loading NvimTree buffers, which would
+" require to remember closing all NvimTree buffers
 " before quitting the session
 "
-" This function checks if there's any NERDTree buffers open,
+" This function checks if there's any NvimTree buffers open,
 " closes them, and then saves the workspce and writes to all
 " buffers. If quit_after is set to 1, quits all buffers too
 "
 " AUTHOR: Dahan Schuster
 function! MySaveWorkspace(quit_after)
-	if HasNERDTreeBuffer()
-		" saves the current tab position, because :tabdo
-		" leaves the last tab opened
-		let s:currentTab = tabpagenr()	
-
-		" uses :tabdo to run NERDTreeClose in all tabs
-		tabdo NERDTreeClose
-
-		" uses :execute and :normal to run {count}gt
-		" this switches to tab at position {count}
-		"
-		" @see :help execute
-		" @see :help normal
-		" @see :help gt
-		execute "normal! " . s:currentTab . "gt"
+	if HasNvimTreeBuffer()
+		NvimTreeClose
 	endif
 
 	" closes all unactive buffers (vim-workspace command)
