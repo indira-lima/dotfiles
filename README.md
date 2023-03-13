@@ -45,6 +45,6 @@ is the roadmap
 	- Notifications
 		- [x] dunst
 		- [ ] layout
-		- [ ] color schemes by sender (spotify, opera, wifi)
+		- [x] color schemes by sender (spotify, opera, wifi)
 	- Dijo habit tracker
 		- [ ] find out more about it
