@@ -33,3 +33,47 @@ const ${1:`!p snip.rv = snip.basename`} = ($3) => {
 export default $1;
 endsnippet
 
+snippet us "useState snippet" b
+	const [$1, set${1/\w+\s*/\u$0/}] = useState($3);
+$4
+endsnippet
+
+snippet uc "useCallback snippet" b
+	const $1 = useCallback(($2) => {
+		$3
+	}, [$4]);
+$5
+endsnippet
+
+snippet ue "useEffect snippet" b
+	useEffect(($1) => {
+		$2
+	}, [$3]);
+$4
+endsnippet
+
+snippet um "useMemo snippet" b
+	const $1 = useMemo(() => {
+		return $3
+	}, [$4])
+$5
+endsnippet
+
+snippet ur "useRef snippet" b
+	const $1 = useRef($3);
+$4
+endsnippet
+
+snippet un "useNavigation snippet" b
+	const navigation = useNavigation();
+$1
+endsnippet
+
+snippet uro "useRoute snippet" b
+	const route = useRoute();
+$1
+endsnippet
+
+snippet ds "Debug Style"
+borderWidth: ${1:1},${2: }borderColor: '${3:red}',	
+endsnippet
