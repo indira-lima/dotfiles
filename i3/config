@@ -228,6 +228,8 @@ assign [class="riotclientux.exe"] → $ws6
 assign [class="leagueclient.exe"] → $ws6
 assign [class="leagueclientux.exe"] → $ws6
 assign [class="battle.net.exe"] → $ws6
+assign [class="Minecraft"] → $ws6
+assign [class="org-tlauncher-tlauncher-rmo-TLauncher"] → $ws6
 assign [class="KeePassXC"] → $ws9
 
 # enabling floating windows for Steam
