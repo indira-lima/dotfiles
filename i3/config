@@ -249,6 +249,9 @@ for_window [title="^Steam Keyboard$"] floating enable
 for_window [class="Gpicview"] floating enable
 for_window [class="gnome-calculator"] floating enable
 
+# android studio
+for_window [title="^Trust and Open Project"] floating enable
+for_window [title="^win0$"] floating enable
 
 ### end window manual configuration
 
