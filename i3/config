@@ -217,9 +217,10 @@ assign [class="Anydesk"] → $ws3
 assign [class="Postman"] → $ws3
 assign [class="PacketTracer"] → $ws3
 assign [class="GNS3"] → $ws3
+assign [class="VirtualBox"] → $ws3
 assign [class="discord" instance="discord"] → $ws4
-for_window [class="Spotify"] move to workspace $ws5
-for_window [class="Stremio"] move to workspace $ws5
+assign [class="Spotify"] → $ws5
+assign [class="Stremio"] → $ws5
 assign [class="Steam"] → $ws6
 assign [class="deadcells"] → $ws6
 assign [class="Lutris"] → $ws6
