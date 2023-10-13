@@ -134,7 +134,7 @@ bindsym $mod+mod2+KP_5 workspace $ws5
 bindsym $mod+mod2+KP_6 workspace number $ws6
 bindsym $mod+mod2+KP_7 workspace number $ws7
 bindsym $mod+mod2+KP_8 workspace number $ws8
-bindsym $mod+mod2+KP_0 workspace number $ws9
+bindsym $mod+mod2+KP_9 workspace number $ws9
 
 for_window [class="feh"] floating enable, sticky enable, border pixel 0, move absolute position 0 px 0 px
 
@@ -147,7 +147,7 @@ bindsym $mod+Shift+5 move container to workspace $ws5
 bindsym $mod+Shift+6 move container to workspace number $ws6
 bindsym $mod+Shift+7 move container to workspace number $ws7
 bindsym $mod+Shift+8 move container to workspace number $ws8
-bindsym $mod+Shift+0 move container to workspace number $ws9
+bindsym $mod+Shift+9 move container to workspace number $ws9
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -169,8 +169,8 @@ bindsym $mod+o resize grow width 10 px or 10 ppt
 bindsym $mod+e exec nautilus
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec xbacklight -inc 20 
+bindsym XF86MonBrightnessDown exec xbacklight -dec 20
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play-pause
@@ -220,8 +220,11 @@ assign [class="GNS3"] → $ws3
 assign [class="VirtualBox"] → $ws3
 assign [class="discord" instance="discord"] → $ws4
 assign [class="Spotify"] → $ws5
+assign [class="spotify"] → $ws5
 assign [class="Stremio"] → $ws5
 assign [class="Steam"] → $ws6
+assign [title="Steam"] → $ws6
+assign [class="steamwebhelper"] → $ws6
 assign [class="deadcells"] → $ws6
 assign [class="Lutris"] → $ws6
 assign [class="deadcells"] → $ws6
@@ -259,7 +262,7 @@ for_window [title="^win0$"] floating enable
 ### Window themes
 
 # i3-gaps
-for_window [class=".*"] border pixel 2 #*
+for_window [class=".*"] border pixel 2
 gaps inner 8
 gaps outer 1
 # Only enable gaps on a workspace when there is at least one container
@@ -285,8 +288,8 @@ exec --no-startup-id i3-msg 'exec opera'
 exec --no-startup-id i3-msg 'exec discord'
 exec --no-startup-id i3-msg 'exec keepassxc'
 
-# switch to ws2 and launch terminal
-exec --no-startup-id i3-msg 'workspace $ws2; exec kitty'
+# switch to ws2 and launch terminal with last dumped session
+exec --no-startup-id i3-msg 'workspace $ws2; exec kitty --session ~/kitty-session.kitty'
 
 exec --no-startup-id gammastep -c ~/.config/redshift/redshift.conf
 
